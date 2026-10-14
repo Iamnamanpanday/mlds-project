@@ -1,0 +1,426 @@
+{
+  "benchmark": "Quantized PCA Benchmark",
+  "generatedAt": "2026-09-30T12:04:20+05:30",
+  "dataset": {
+    "trainingFile": "train_1600.xlsx",
+    "testingFile": "test_1200.xlsx",
+    "trainingSamples": 1600,
+    "testingSamples": 1200,
+    "features": 562,
+    "components": 93,
+    "explainedVariancePct": 95.0944595336914,
+    "classes": [
+      "LAYING",
+      "SITTING",
+      "STANDING",
+      "WALKING",
+      "WALKING_DOWNSTAIRS",
+      "WALKING_UPSTAIRS"
+    ]
+  },
+  "configuration": {
+    "quantizationScale": 128,
+    "warmupRuns": 5,
+    "measuredRuns": 50,
+    "classifier": "Random Forest (100 trees)"
+  },
+  "methods": {
+    "float": {
+      "name": "Float PCA",
+      "accuracyPct": 82.08333333333333,
+      "latencyMs": {
+        "mean_ms": 1.4538420000371843,
+        "min_ms": 0.7939000001897512,
+        "max_ms": 2.8081000000383938
+      },
+      "memoryBytes": 209064,
+      "memoryKiB": 204.1640625,
+      "approximationErrorPct": 0.0,
+      "storageReductionPct": 0.0,
+      "classificationReport": {
+        "LAYING": {
+          "precision": 0.9368421052631579,
+          "recall": 0.8476190476190476,
+          "f1-score": 0.89,
+          "support": 210.0
+        },
+        "SITTING": {
+          "precision": 0.7659574468085106,
+          "recall": 0.54,
+          "f1-score": 0.6334310850439883,
+          "support": 200.0
+        },
+        "STANDING": {
+          "precision": 0.6402877697841727,
+          "recall": 0.8944723618090452,
+          "f1-score": 0.7463312368972747,
+          "support": 199.0
+        },
+        "WALKING": {
+          "precision": 0.9601990049751243,
+          "recall": 0.8616071428571429,
+          "f1-score": 0.908235294117647,
+          "support": 224.0
+        },
+        "WALKING_DOWNSTAIRS": {
+          "precision": 0.74235807860262,
+          "recall": 0.9883720930232558,
+          "f1-score": 0.8478802992518704,
+          "support": 172.0
+        },
+        "WALKING_UPSTAIRS": {
+          "precision": 0.9813664596273292,
+          "recall": 0.8102564102564103,
+          "f1-score": 0.8876404494382022,
+          "support": 195.0
+        },
+        "accuracy": 0.8208333333333333,
+        "macro avg": {
+          "precision": 0.8378351441768191,
+          "recall": 0.8237211759274836,
+          "f1-score": 0.8189197274581638,
+          "support": 1200.0
+        },
+        "weighted avg": {
+          "precision": 0.8429018532628528,
+          "recall": 0.8208333333333333,
+          "f1-score": 0.8203967817878995,
+          "support": 1200.0
+        }
+      },
+      "confusionMatrix": [
+        [
+          178,
+          13,
+          19,
+          0,
+          0,
+          0
+        ],
+        [
+          11,
+          108,
+          81,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          20,
+          178,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          193,
+          29,
+          2
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          170,
+          1
+        ],
+        [
+          0,
+          0,
+          0,
+          7,
+          30,
+          158
+        ]
+      ],
+      "confusionMatrixImage": "baseline_confusion_matrix.png"
+    },
+    "naive": {
+      "name": "Naive INT8",
+      "accuracyPct": 82.5,
+      "latencyMs": {
+        "mean_ms": 1.0604000000330416,
+        "min_ms": 0.8086999996521627,
+        "max_ms": 1.4416999997592939
+      },
+      "memoryBytes": 52266,
+      "memoryKiB": 51.041015625,
+      "approximationErrorPct": 5.351041316986084,
+      "storageReductionPct": 75.0,
+      "classificationReport": {
+        "LAYING": {
+          "precision": 0.9623655913978495,
+          "recall": 0.8523809523809524,
+          "f1-score": 0.9040404040404041,
+          "support": 210.0
+        },
+        "SITTING": {
+          "precision": 0.7533333333333333,
+          "recall": 0.565,
+          "f1-score": 0.6457142857142857,
+          "support": 200.0
+        },
+        "STANDING": {
+          "precision": 0.635036496350365,
+          "recall": 0.8743718592964824,
+          "f1-score": 0.7357293868921776,
+          "support": 199.0
+        },
+        "WALKING": {
+          "precision": 0.9701492537313433,
+          "recall": 0.8705357142857143,
+          "f1-score": 0.9176470588235294,
+          "support": 224.0
+        },
+        "WALKING_DOWNSTAIRS": {
+          "precision": 0.7702702702702703,
+          "recall": 0.9941860465116279,
+          "f1-score": 0.868020304568528,
+          "support": 172.0
+        },
+        "WALKING_UPSTAIRS": {
+          "precision": 0.9461077844311377,
+          "recall": 0.8102564102564103,
+          "f1-score": 0.8729281767955801,
+          "support": 195.0
+        },
+        "accuracy": 0.825,
+        "macro avg": {
+          "precision": 0.8395437882523832,
+          "recall": 0.8277884971218645,
+          "f1-score": 0.8240132694724175,
+          "support": 1200.0
+        },
+        "weighted avg": {
+          "precision": 0.8445222007669306,
+          "recall": 0.825,
+          "f1-score": 0.8253957650169007,
+          "support": 1200.0
+        }
+      },
+      "confusionMatrix": [
+        [
+          179,
+          13,
+          18,
+          0,
+          0,
+          0
+        ],
+        [
+          6,
+          113,
+          81,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          24,
+          174,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          195,
+          20,
+          9
+        ],
+        [
+          0,
+          0,
+          0,
+          1,
+          171,
+          0
+        ],
+        [
+          0,
+          0,
+          1,
+          5,
+          31,
+          158
+        ]
+      ],
+      "confusionMatrixImage": "naive_integer_confusion_matrix.png"
+    },
+    "proposed": {
+      "name": "Proposed INT8",
+      "accuracyPct": 82.83333333333334,
+      "latencyMs": {
+        "mean_ms": 1.1901879999641096,
+        "min_ms": 0.7318000002669578,
+        "max_ms": 1.7121000000770437
+      },
+      "memoryBytes": 52266,
+      "memoryKiB": 51.041015625,
+      "approximationErrorPct": 5.3552703857421875,
+      "storageReductionPct": 75.0,
+      "classificationReport": {
+        "LAYING": {
+          "precision": 0.9526315789473684,
+          "recall": 0.861904761904762,
+          "f1-score": 0.905,
+          "support": 210.0
+        },
+        "SITTING": {
+          "precision": 0.8115942028985508,
+          "recall": 0.56,
+          "f1-score": 0.6627218934911243,
+          "support": 200.0
+        },
+        "STANDING": {
+          "precision": 0.6334519572953736,
+          "recall": 0.8944723618090452,
+          "f1-score": 0.7416666666666667,
+          "support": 199.0
+        },
+        "WALKING": {
+          "precision": 0.9701492537313433,
+          "recall": 0.8705357142857143,
+          "f1-score": 0.9176470588235294,
+          "support": 224.0
+        },
+        "WALKING_DOWNSTAIRS": {
+          "precision": 0.7555555555555555,
+          "recall": 0.9883720930232558,
+          "f1-score": 0.8564231738035264,
+          "support": 172.0
+        },
+        "WALKING_UPSTAIRS": {
+          "precision": 0.9575757575757575,
+          "recall": 0.8102564102564103,
+          "f1-score": 0.8777777777777778,
+          "support": 195.0
+        },
+        "accuracy": 0.8283333333333334,
+        "macro avg": {
+          "precision": 0.8468263843339914,
+          "recall": 0.8309235568798646,
+          "f1-score": 0.8268727617604373,
+          "support": 1200.0
+        },
+        "weighted avg": {
+          "precision": 0.8520205606492384,
+          "recall": 0.8283333333333334,
+          "f1-score": 0.8285086992518627,
+          "support": 1200.0
+        }
+      },
+      "confusionMatrix": [
+        [
+          181,
+          6,
+          23,
+          0,
+          0,
+          0
+        ],
+        [
+          8,
+          112,
+          80,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          20,
+          178,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          195,
+          22,
+          7
+        ],
+        [
+          0,
+          0,
+          0,
+          2,
+          170,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          4,
+          33,
+          158
+        ]
+      ],
+      "confusionMatrixImage": "proposed_int8_confusion_matrix.png"
+    }
+  },
+  "artifacts": [
+    {
+      "filename": "baseline_confusion_matrix.png",
+      "extension": "png",
+      "sizeBytes": 99412
+    },
+    {
+      "filename": "float_pca_components.npy",
+      "extension": "npy",
+      "sizeBytes": 418256
+    },
+    {
+      "filename": "naive_integer_confusion_matrix.png",
+      "extension": "png",
+      "sizeBytes": 106663
+    },
+    {
+      "filename": "naive_integer_pca_matrix.npy",
+      "extension": "npy",
+      "sizeBytes": 52394
+    },
+    {
+      "filename": "proposed_float_pca_components.npy",
+      "extension": "npy",
+      "sizeBytes": 209192
+    },
+    {
+      "filename": "proposed_int16_confusion_matrix.png",
+      "extension": "png",
+      "sizeBytes": 101432
+    },
+    {
+      "filename": "proposed_int8_confusion_matrix.png",
+      "extension": "png",
+      "sizeBytes": 99182
+    },
+    {
+      "filename": "proposed_int8_pca_matrix.npy",
+      "extension": "npy",
+      "sizeBytes": 51832
+    },
+    {
+      "filename": "proposed_int8_scale.txt",
+      "extension": "txt",
+      "sizeBytes": 3
+    },
+    {
+      "filename": "proposed_integer_pca_matrix.npy",
+      "extension": "npy",
+      "sizeBytes": 52394
+    }
+  ]
+}

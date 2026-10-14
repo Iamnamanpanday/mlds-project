@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Measured classification comparison for the proposed INT8 PCA method and five established baselines.">
+  <title>Classification Field Test | MLDS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="table.css">
+</head>
+<body>
+  <header class="page-header">
+    <a class="wordmark" href="#comparison">MLDS <span>/</span> CLASSIFICATION</a>
+    <div class="header-actions">
+      <span class="report-status" id="report-status">Loading report</span>
+      <button id="refresh-report" type="button" title="Refresh measured results">Refresh</button>
+    </div>
+  </header>
+  <main id="comparison">
+    <div class="table-heading">
+      <div>
+        <p>ONLY DISTINCTIVE FEATURES AND MEASURED WINS</p>
+        <h1>Where our method wins</h1>
+        <div class="method-reference">Reference model: <strong>Proposed INT8 PCA + Random Forest (Our method)</strong></div>
+      </div>
+      <div class="comparison-key"><span class="wins">✓</span> Strict measured win</div>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">BASELINE MODEL</th>
+            <th scope="col">FEATURES UNIQUE TO OUR METHOD</th>
+            <th scope="col">METRICS WHERE OUR METHOD SCORES HIGHER / LOWER</th>
+          </tr>
+        </thead>
+        <tbody id="model-rows"><tr><td colspan="3" class="loading-cell">Loading measured classification report...</td></tr></tbody>
+      </table>
+    </div>
+    <footer>
+      <span id="report-details">Same held-out test set · only strict wins are listed</span>
+      <span id="generated-at">—</span>
+    </footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

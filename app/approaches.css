@@ -1,0 +1,27 @@
+.approaches-subtitle { margin: -3px 0 15px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.approaches-key { display: flex; align-items: center; gap: 7px; margin: -6px 0 10px; color: var(--muted); font: 9px var(--mono); }
+.approaches-key b { color: #287444; font-size: 12px; }
+.approaches-key span { color: #9ba39b; font-size: 13px; }
+.approaches-table-wrap { overflow-x: auto; border-radius: 3px; }
+.approaches-table { min-width: 1080px; }
+.approaches-table th, .approaches-table td { padding: 11px 12px; border-bottom: 1px solid var(--line); font-size: 10px; line-height: 1.5; vertical-align: middle; }
+.approaches-table thead th { position: sticky; top: 0; z-index: 1; color: var(--muted); background: #edf0eb; font: 9px var(--mono); }
+.approaches-table tbody th { min-width: 245px; font-weight: 500; }
+.approaches-table th:last-child, .approaches-table td:last-child { background: #f0f5e5; }
+.approaches-table thead th:last-child { background: #e7efd6; }
+.approaches-table .approach-priority th { font-weight: 600; }
+.approach-check { color: #287444; font-size: 14px; font-weight: 700; }
+.approach-dash { color: #9ba39b; font-size: 14px; }
+.approaches-note, .approaches-conclusion { color: var(--muted); font-size: 10px; line-height: 1.65; }
+.approaches-note { margin: 11px 0 0; }
+.approaches-conclusion { margin: 13px 0 0; color: var(--ink); }
+@media (max-width: 700px) {
+  .approaches-table-wrap { margin-inline: -2px; }
+  .approaches-table { min-width: 1080px; }
+  .approaches-note, .approaches-conclusion { font-size: 10px; }
+}
+@media print {
+  .approaches-table-wrap { overflow: visible; }
+  .approaches-table { min-width: 0; }
+  .approaches-table th, .approaches-table td { padding: 5px; font-size: 7px; }
+}

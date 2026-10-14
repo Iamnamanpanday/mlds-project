@@ -1,0 +1,260 @@
+{
+  "generatedAt": "2026-09-30T22:15:57+05:30",
+  "dataset": {
+    "trainingFile": "train_1600.xlsx",
+    "testingFile": "test_1200.xlsx",
+    "trainingSamples": 1600,
+    "testingSamples": 1200,
+    "features": 562,
+    "components": 93,
+    "explainedVariancePct": 95.09447813034058,
+    "classes": [
+      "LAYING",
+      "SITTING",
+      "STANDING",
+      "WALKING",
+      "WALKING_DOWNSTAIRS",
+      "WALKING_UPSTAIRS"
+    ]
+  },
+  "methodology": {
+    "timingRepeats": 5,
+    "latency": "Mean per-sample StandardScaler + PCA projection + classifier prediction time.",
+    "projectionStorage": "PCA projection matrix bytes only; classifier and shared scaler storage excluded.",
+    "comparison": "Every baseline is compared with Proposed INT8 PCA + Random Forest (Our method)."
+  },
+  "distinctiveFeatures": [
+    "Two local-search passes refine the first 20 PCA components after INT8 quantization.",
+    "Each selected coefficient tests adjacent integer values (-1 and +1), keeping only objective-improving changes.",
+    "The refinement objective combines relative projection approximation error with a 0.05-weighted orthogonality penalty."
+  ],
+  "models": [
+    {
+      "name": "Proposed INT8 PCA + Random Forest (Our method)",
+      "note": "Optimized INT8 PCA projection with the project's 100-tree Random Forest.",
+      "accuracyPct": 82.83333333333334,
+      "weightedPrecisionPct": 85.20205606492384,
+      "weightedRecallPct": 82.83333333333334,
+      "weightedF1Pct": 82.85086992518626,
+      "latencyMsPerSample": 0.2117626166666469,
+      "projectionBytes": 52266
+    },
+    {
+      "name": "Float PCA + Random Forest",
+      "note": "Full-precision PCA projection with the same 100-tree Random Forest.",
+      "accuracyPct": 82.83333333333334,
+      "weightedPrecisionPct": 85.39960070754671,
+      "weightedRecallPct": 82.83333333333334,
+      "weightedF1Pct": 82.86084348022456,
+      "latencyMsPerSample": 0.19477970000010222,
+      "projectionBytes": 209064
+    },
+    {
+      "name": "Naive INT8 PCA + Random Forest",
+      "note": "Directly rounded INT8 PCA projection with the same 100-tree Random Forest.",
+      "accuracyPct": 82.0,
+      "weightedPrecisionPct": 84.96187594267775,
+      "weightedRecallPct": 82.0,
+      "weightedF1Pct": 82.09558508804655,
+      "latencyMsPerSample": 0.19516496666672842,
+      "projectionBytes": 52266
+    },
+    {
+      "name": "Float PCA + RBF SVM",
+      "note": "RBF support vector classifier on shared 95%-variance PCA features.",
+      "accuracyPct": 85.16666666666667,
+      "weightedPrecisionPct": 86.86578520290671,
+      "weightedRecallPct": 85.16666666666667,
+      "weightedF1Pct": 85.40123553943484,
+      "latencyMsPerSample": 0.519536116666662,
+      "projectionBytes": 209064
+    },
+    {
+      "name": "Float PCA + 5-NN",
+      "note": "Five-nearest-neighbor classifier on shared 95%-variance PCA features.",
+      "accuracyPct": 80.58333333333333,
+      "weightedPrecisionPct": 82.58975763095022,
+      "weightedRecallPct": 80.58333333333333,
+      "weightedF1Pct": 80.24859246735954,
+      "latencyMsPerSample": 0.08816503333332548,
+      "projectionBytes": 209064
+    },
+    {
+      "name": "Float PCA + Logistic Regression",
+      "note": "Logistic regression on shared 95%-variance PCA features.",
+      "accuracyPct": 83.33333333333334,
+      "weightedPrecisionPct": 84.97711237179783,
+      "weightedRecallPct": 83.33333333333334,
+      "weightedF1Pct": 83.63213111985475,
+      "latencyMsPerSample": 0.031185500000068107,
+      "projectionBytes": 209064
+    }
+  ],
+  "comparisons": [
+    {
+      "name": "Float PCA + Random Forest",
+      "accuracy": {
+        "ourMethod": 82.83333333333334,
+        "baseline": 82.83333333333334,
+        "ourMethodWins": true
+      },
+      "weightedPrecision": {
+        "ourMethod": 85.20205606492384,
+        "baseline": 85.39960070754671,
+        "ourMethodWins": false
+      },
+      "weightedRecall": {
+        "ourMethod": 82.83333333333334,
+        "baseline": 82.83333333333334,
+        "ourMethodWins": true
+      },
+      "weightedF1": {
+        "ourMethod": 82.85086992518626,
+        "baseline": 82.86084348022456,
+        "ourMethodWins": false
+      },
+      "latency": {
+        "ourMethod": 0.2117626166666469,
+        "baseline": 0.19477970000010222,
+        "ourMethodWins": false
+      },
+      "projection": {
+        "ourMethod": 52266,
+        "baseline": 209064,
+        "ourMethodWins": true
+      }
+    },
+    {
+      "name": "Naive INT8 PCA + Random Forest",
+      "accuracy": {
+        "ourMethod": 82.83333333333334,
+        "baseline": 82.0,
+        "ourMethodWins": true
+      },
+      "weightedPrecision": {
+        "ourMethod": 85.20205606492384,
+        "baseline": 84.96187594267775,
+        "ourMethodWins": true
+      },
+      "weightedRecall": {
+        "ourMethod": 82.83333333333334,
+        "baseline": 82.0,
+        "ourMethodWins": true
+      },
+      "weightedF1": {
+        "ourMethod": 82.85086992518626,
+        "baseline": 82.09558508804655,
+        "ourMethodWins": true
+      },
+      "latency": {
+        "ourMethod": 0.2117626166666469,
+        "baseline": 0.19516496666672842,
+        "ourMethodWins": false
+      },
+      "projection": {
+        "ourMethod": 52266,
+        "baseline": 52266,
+        "ourMethodWins": true
+      }
+    },
+    {
+      "name": "Float PCA + RBF SVM",
+      "accuracy": {
+        "ourMethod": 82.83333333333334,
+        "baseline": 85.16666666666667,
+        "ourMethodWins": false
+      },
+      "weightedPrecision": {
+        "ourMethod": 85.20205606492384,
+        "baseline": 86.86578520290671,
+        "ourMethodWins": false
+      },
+      "weightedRecall": {
+        "ourMethod": 82.83333333333334,
+        "baseline": 85.16666666666667,
+        "ourMethodWins": false
+      },
+      "weightedF1": {
+        "ourMethod": 82.85086992518626,
+        "baseline": 85.40123553943484,
+        "ourMethodWins": false
+      },
+      "latency": {
+        "ourMethod": 0.2117626166666469,
+        "baseline": 0.519536116666662,
+        "ourMethodWins": true
+      },
+      "projection": {
+        "ourMethod": 52266,
+        "baseline": 209064,
+        "ourMethodWins": true
+      }
+    },
+    {
+      "name": "Float PCA + 5-NN",
+      "accuracy": {
+        "ourMethod": 82.83333333333334,
+        "baseline": 80.58333333333333,
+        "ourMethodWins": true
+      },
+      "weightedPrecision": {
+        "ourMethod": 85.20205606492384,
+        "baseline": 82.58975763095022,
+        "ourMethodWins": true
+      },
+      "weightedRecall": {
+        "ourMethod": 82.83333333333334,
+        "baseline": 80.58333333333333,
+        "ourMethodWins": true
+      },
+      "weightedF1": {
+        "ourMethod": 82.85086992518626,
+        "baseline": 80.24859246735954,
+        "ourMethodWins": true
+      },
+      "latency": {
+        "ourMethod": 0.2117626166666469,
+        "baseline": 0.08816503333332548,
+        "ourMethodWins": false
+      },
+      "projection": {
+        "ourMethod": 52266,
+        "baseline": 209064,
+        "ourMethodWins": true
+      }
+    },
+    {
+      "name": "Float PCA + Logistic Regression",
+      "accuracy": {
+        "ourMethod": 82.83333333333334,
+        "baseline": 83.33333333333334,
+        "ourMethodWins": false
+      },
+      "weightedPrecision": {
+        "ourMethod": 85.20205606492384,
+        "baseline": 84.97711237179783,
+        "ourMethodWins": true
+      },
+      "weightedRecall": {
+        "ourMethod": 82.83333333333334,
+        "baseline": 83.33333333333334,
+        "ourMethodWins": false
+      },
+      "weightedF1": {
+        "ourMethod": 82.85086992518626,
+        "baseline": 83.63213111985475,
+        "ourMethodWins": false
+      },
+      "latency": {
+        "ourMethod": 0.2117626166666469,
+        "baseline": 0.031185500000068107,
+        "ourMethodWins": false
+      },
+      "projection": {
+        "ourMethod": 52266,
+        "baseline": 209064,
+        "ourMethodWins": true
+      }
+    }
+  ]
+}

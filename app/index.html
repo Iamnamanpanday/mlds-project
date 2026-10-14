@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PCA classification benchmark comparison dashboard">
+  <title>Quantized PCA | Benchmark Lab</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="approaches.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#top" aria-label="Benchmark Lab home">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span>benchmark<span class="brand-muted">/lab</span></span>
+      </a>
+      <div class="side-label">Workspace</div>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a class="active" href="#overview"><span class="nav-icon">◒</span>Overview</a>
+        <a href="#methods"><span class="nav-icon">≋</span>Methods</a>
+        <a href="#feature-report"><span class="nav-icon">✓</span>Feature report</a>
+        <a href="#novelty"><span class="nav-icon">✳</span>Our method</a>
+        <a href="#classification"><span class="nav-icon">▦</span>Classification</a>
+        <a href="#artifacts"><span class="nav-icon">◇</span>Artifacts</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="side-label">Experiment</div>
+        <div class="experiment-card">
+          <div class="status-dot"></div>
+          <div><strong>PCA compression</strong><small>run_2026_09_24</small></div>
+        </div>
+        <div class="side-foot"><span>●</span> Local benchmark<br><span class="foot-indent">Python / sklearn</span></div>
+      </div>
+    </aside>
+
+    <main class="main-content" id="top">
+      <header class="topbar">
+        <div class="breadcrumb"><span>EXPERIMENTS</span><b>/</b> PCA QUANTIZATION</div>
+        <div class="top-actions">
+          <span class="run-chip" id="run-status"><i></i> Loading benchmark...</span>
+          <div class="options-menu-wrapper" style="position: relative;">
+            <button class="icon-button" id="options-btn" title="More options" aria-label="More options">•••</button>
+            <div class="options-dropdown" id="options-dropdown" style="display: none; position: absolute; right: 0; top: 100%; background: #1b2a28; border: 1px solid #35514a; border-radius: 4px; padding: 6px 0; z-index: 100; min-width: 170px; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+              <button class="dropdown-item" id="btn-export-json" style="width: 100%; text-align: left; background: none; border: none; color: #f3f6ed; padding: 8px 14px; font-family: var(--mono); font-size: 11px; cursor: pointer;">Export Summary (JSON)</button>
+              <button class="dropdown-item" id="btn-print" style="width: 100%; text-align: left; background: none; border: none; color: #f3f6ed; padding: 8px 14px; font-family: var(--mono); font-size: 11px; cursor: pointer;">Print / PDF</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="hero" id="overview">
+        <div class="eyebrow"><span class="eyebrow-line"></span>Classification benchmark / 01</div>
+        <div class="hero-grid">
+          <div>
+            <h1>Small models.<br><em>Same signal.</em></h1>
+            <p class="hero-copy">A measured look at how integer PCA holds up against a full-precision baseline, from matrix footprint to end-to-end classification quality.</p>
+          </div>
+          <div class="hero-callout">
+            <span class="callout-kicker">Best trade-off</span>
+            <strong id="best-method">Proposed INT8</strong>
+            <span class="callout-detail"><b id="best-accuracy">—</b> accuracy · <b id="best-latency">—</b> projection</span>
+            <span class="callout-rule"></span>
+            <span class="callout-foot" id="best-summary">Latest measured benchmark result</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="metric-strip" aria-label="Headline metrics">
+        <article class="metric-card accent-card"><div class="metric-top"><span>TOP ACCURACY</span><span class="metric-tag" id="accuracy-tag">LATEST</span></div><strong id="top-accuracy">—<span>%</span></strong><small id="top-accuracy-note">Loading measured results</small></article>
+        <article class="metric-card"><div class="metric-top"><span>FASTEST PROJECTION</span><span class="metric-tag green">LOWEST</span></div><strong id="fastest-latency">—<span> ms</span></strong><small id="fastest-method">Loading measured results</small></article>
+        <article class="metric-card"><div class="metric-top"><span>STORAGE SAVED</span><span class="metric-tag" id="storage-percent">—</span></div><strong id="storage-saved">—<span> KiB</span></strong><small>Smallest quantized matrix vs Float PCA</small></article>
+        <article class="metric-card"><div class="metric-top"><span>PCA COMPONENTS</span><span class="metric-tag neutral" id="variance-tag">—</span></div><strong id="component-count">—</strong><small id="feature-count">Loading dataset details</small></article>
+      </section>
+
+      <section class="section-block" id="methods">
+        <div class="section-heading"><div><span class="section-index">02</span><h2>Method comparison</h2></div><span class="section-note">50 timed repeats · test set n = 1,200</span></div>
+        <div class="comparison-layout">
+          <div class="chart-panel">
+            <div class="panel-head"><div><span class="panel-kicker">Projection latency</span><h3>Lower is better</h3></div><span class="unit-label">MILLISECONDS</span></div>
+            <div class="bar-chart" aria-label="Projection latency chart">
+              <div class="bar-row" data-method="float"><div class="bar-label"><span class="method-dot float"></span>Float PCA</div><div class="bar-track"><div class="bar-fill float-fill"></div></div><strong>—</strong></div>
+              <div class="bar-row" data-method="naive"><div class="bar-label"><span class="method-dot naive"></span>Naive INT8</div><div class="bar-track"><div class="bar-fill naive-fill"></div></div><strong>—</strong></div>
+              <div class="bar-row highlight-row" data-method="proposed"><div class="bar-label"><span class="method-dot proposed"></span>Proposed INT8</div><div class="bar-track"><div class="bar-fill proposed-fill"></div></div><strong>—</strong></div>
+            </div>
+            <div class="chart-foot"><span><i class="tiny-dot"></i> Minimum <b id="latency-min">—</b> ms</span><span>Maximum <b id="latency-max">—</b> ms</span></div>
+          </div>
+          <div class="winner-panel">
+            <span class="panel-kicker">Measured trade-off</span><div class="winner-number">01</div><h3>Efficient<br>by design.</h3><p id="tradeoff-summary">Loading measured storage and accuracy results.</p><div class="mini-stat"><span>Storage reduction</span><strong id="tradeoff-storage">—</strong></div><div class="mini-stat"><span>Accuracy delta</span><strong id="tradeoff-accuracy">—</strong></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-block table-section">
+        <div class="section-heading"><div><span class="section-index">03</span><h2>Full benchmark</h2></div><span class="section-note">Projection + Random Forest classifier</span></div>
+        <div class="table-wrap"><table><thead><tr><th>METHOD</th><th>ACCURACY</th><th>LATENCY</th><th>MEMORY</th><th>APPROX. ERROR</th><th>STORAGE SAVED</th></tr></thead><tbody id="comparison-body"></tbody></table></div>
+      </section>
+
+      <section class="section-block feature-report" id="feature-report">
+        <div class="section-heading"><div><span class="section-index">04</span><h2>Our model vs five baselines</h2></div><span class="section-note" id="feature-report-date">Loading comparison</span></div>
+        <p class="feature-report-intro">Proposed INT8 is listed first as our method, followed by five established alternatives evaluated on the same held-out data. Checkmarks and crosses compare each baseline with our measured result.</p>
+        <div class="table-wrap"><table><thead><tr><th>MODEL / COMPARISON</th><th>ACCURACY</th><th>INFERENCE LATENCY</th><th>PCA MATRIX SIZE</th></tr></thead><tbody id="feature-report-body"><tr><td colspan="4">Loading measured comparisons...</td></tr></tbody></table></div>
+        <p class="feature-report-method" id="feature-report-method"></p>
+      </section>
+
+      <section class="section-block approaches-comparison" id="existing-approaches">
+        <div class="section-heading"><div><span class="section-index">07</span><h2>Comparison with Existing Approaches</h2></div><span class="section-note">FEATURE-LEVEL COMPARISON</span></div>
+        <p class="approaches-subtitle">Feature-level comparison of PCA-based approaches for resource-constrained edge classification.</p>
+        <p class="approaches-key"><b>✓</b> Feature present <span>—</span> Not part of approach / not reported</p>
+        <div class="table-wrap approaches-table-wrap">
+          <table class="approaches-table">
+            <thead><tr><th scope="col">FEATURE</th><th scope="col">STANDARD PCA</th><th scope="col">EMBEDDED STREAMING HPCA</th><th scope="col">FIXED-POINT PCA ACCELERATOR</th><th scope="col">QUANTIZED PCA</th><th scope="col">PROPOSED INT8 PCA (OUR METHOD)</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">PCA dimensionality reduction</th><td><span class="approach-check">✓</span></td><td><span class="approach-check">✓</span></td><td><span class="approach-check">✓</span></td><td><span class="approach-check">✓</span></td><td><span class="approach-check">✓</span> 562 → 93 components; 95.09% variance</td></tr>
+              <tr><th scope="row">Fixed-point / integer arithmetic</th><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-check">✓</span></td><td><span class="approach-check">✓</span></td><td><span class="approach-check">✓</span> INT8, scale 128</td></tr>
+              <tr><th scope="row">INT8 representation</th><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-check">✓</span></td><td><span class="approach-check">✓</span></td></tr>
+              <tr><th scope="row">Quantized PCA projection matrix</th><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-check">✓</span></td><td><span class="approach-check">✓</span></td><td><span class="approach-check">✓</span> Post-quantization optimized</td></tr>
+              <tr><th scope="row">Edge / embedded deployment focus</th><td><span class="approach-dash">—</span></td><td><span class="approach-check">✓</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-check">✓</span> Wearable edge classifier</td></tr>
+              <tr class="approach-priority"><th scope="row">Post-quantization optimization</th><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-check">✓</span></td></tr>
+              <tr class="approach-priority"><th scope="row">Approximation-error objective</th><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-check">✓</span></td></tr>
+              <tr class="approach-priority"><th scope="row">Orthogonality-error objective</th><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-check">✓</span></td></tr>
+              <tr class="approach-priority"><th scope="row">Coordinate-wise integer optimization</th><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-check">✓</span></td></tr>
+              <tr class="approach-priority"><th scope="row">Combined approximation + orthogonality objective</th><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-check">✓</span> J = E<sub>approx</sub> + λE<sub>orth</sub>; λ = 0.05</td></tr>
+              <tr><th scope="row">6-class HAR classifier integration</th><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-dash">—</span></td><td><span class="approach-check">✓</span> Random Forest</td></tr>
+              <tr><th scope="row">PCA matrix memory</th><td>204.16 KiB FP32 reference</td><td>Not reported</td><td>Not reported</td><td>Not reported</td><td>51.04 KiB INT8; 75% below FP32</td></tr>
+              <tr><th scope="row">Accuracy on our HAR dataset</th><td>Not reported</td><td>Not reported</td><td>Not reported</td><td>Not reported</td><td>82.83%</td></tr>
+              <tr><th scope="row">Measured CPU / Python latency</th><td>Not reported</td><td>Not reported</td><td>Not reported</td><td>Not reported</td><td>0.8609 ms</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="approaches-note">✓ indicates that the feature is part of the approach. Numerical results are shown only where they were measured in our experiment. Existing approaches use different datasets, hardware, and workloads and therefore are not directly comparable numerically.</p>
+        <p class="approaches-conclusion">Our proposed approach extends conventional INT8 PCA with a post-quantization optimization stage. The optimization jointly considers PCA matrix approximation and orthogonality, using coordinate-wise integer search to refine the quantized projection matrix.</p>
+      </section>
+
+      <section class="section-block novelty-section" id="novelty">
+        <div class="section-heading"><div><span class="section-index">04</span><h2>Our method</h2></div><span class="section-note">PROPOSED PIPELINE / MEASURED OUTCOME</span></div>
+        <div class="novelty-layout">
+          <article class="novelty-method">
+            <span class="panel-kicker">What this project adds</span>
+            <h3>Refine the quantized projection, not just the precision.</h3>
+            <p>Instead of stopping at direct rounding, the proposed pipeline starts with an INT8 PCA matrix and searches each coefficient at adjacent integer values. It keeps changes that reduce a combined reconstruction and orthogonality objective.</p>
+            <ol class="method-steps" aria-label="Proposed method steps">
+              <li><span>01</span><div><strong>Learn the projection</strong><small>Standardize the inputs and fit PCA to retain 95% of training variance.</small></div></li>
+              <li><span>02</span><div><strong>Quantize and refine</strong><small>Scale components by 128 into INT8, then run two local-search passes over up to 20 components.</small></div></li>
+              <li><span>03</span><div><strong>Classify in compact space</strong><small>Project samples with the refined matrix and train the 100-tree Random Forest.</small></div></li>
+            </ol>
+            <div class="novelty-equation"><span>OPTIMIZATION OBJECTIVE</span><strong>approximation error + λ · orthogonality error</strong></div>
+            <div class="novelty-tags"><span>INT8 COEFFICIENTS</span><span>LOCAL COORDINATE SEARCH</span><span>FIXED SCALE <b id="novelty-scale">—</b></span></div>
+          </article>
+          <aside class="novelty-result">
+            <span class="panel-kicker">Measured on this run</span>
+            <div class="novelty-score"><strong id="novelty-accuracy">—</strong><span>proposed accuracy</span></div>
+            <div class="novelty-comparison"><span>vs Float PCA accuracy</span><strong id="novelty-accuracy-delta">—</strong></div>
+            <div class="novelty-comparison"><span>Matrix storage</span><strong><span id="novelty-int8-storage">—</span> vs <span id="novelty-float-storage">—</span></strong></div>
+            <p id="novelty-result-note">Loading measured comparison.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section-block classification" id="classification">
+        <div class="section-heading"><div><span class="section-index">04</span><h2>Classification report</h2></div><div class="segmented"><button class="active" data-report="proposed">Proposed INT8</button><button data-report="baseline">Float PCA</button><button data-report="naive">Naive INT8</button></div></div>
+        <div class="report-grid"><div class="report-summary"><span class="panel-kicker">Selected model</span><h3 id="report-title">Proposed INT8</h3><div class="report-score" id="report-score">—<span>%</span></div><span class="score-caption">test accuracy</span><div class="report-lines"><div><span>Precision</span><strong id="precision">—</strong></div><div><span>Recall</span><strong id="recall">—</strong></div><div><span>F1-score</span><strong id="f1">—</strong></div></div></div><div class="confusion"><div class="panel-head"><div><span class="panel-kicker">Confusion matrix image</span><h3 id="matrix-title">Loading results</h3></div><a id="matrix-link" href="../results/proposed_int8_confusion_matrix.png" target="_blank" rel="noreferrer">Open image ↗</a></div><img id="matrix-image" src="../results/proposed_int8_confusion_matrix.png" data-filename="proposed_int8_confusion_matrix.png" alt="Proposed INT8 confusion matrix"></div></div>
+        <div class="evaluation-tables"><div class="table-wrap"><h3>Per-class report</h3><table><thead><tr><th>CLASS</th><th>PRECISION</th><th>RECALL</th><th>F1-SCORE</th><th>SUPPORT</th></tr></thead><tbody id="class-report-body"></tbody></table></div><div class="table-wrap"><h3>Confusion matrix values</h3><div class="matrix-table-scroll"><table id="confusion-data-table"></table></div></div></div>
+      </section>
+
+      <section class="section-block artifacts" id="artifacts"><div class="section-heading"><div><span class="section-index">05</span><h2>Run details &amp; outputs</h2></div><span class="section-note" id="generated-time">Loading run metadata</span></div><div class="notes-grid"><div><span>DATASET</span><strong id="dataset-note">—</strong></div><div><span>PIPELINE</span><strong id="pipeline-note">StandardScaler → PCA → Random Forest</strong></div><div><span>REPEATS</span><strong id="repeat-note">—</strong></div><div><span>FEATURES</span><strong id="dimensions-note">—</strong></div><div><span>QUANTIZATION</span><strong id="scale-note">—</strong></div><div><span>CLASSES</span><strong id="classes-note">—</strong></div></div><div class="outputs-heading"><div><span class="section-index">06</span><h2>Saved output files</h2></div><span class="section-note" id="artifact-count">—</span></div><div class="output-grid" id="output-grid" aria-live="polite"></div></section>
+      <footer><span>BENCHMARK LAB / MLDS PROJECT 01</span><span id="footer-generated">LOCAL RESULTS</span></footer>
+    </main>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

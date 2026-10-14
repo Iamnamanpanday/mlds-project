@@ -1,0 +1,160 @@
+{
+  "generatedAt": "2026-09-30T21:44:05+05:30",
+  "dataset": {
+    "trainingFile": "train_1600.xlsx",
+    "testingFile": "test_1200.xlsx",
+    "trainingSamples": 1600,
+    "testingSamples": 1200,
+    "features": 562,
+    "components": 93,
+    "explainedVariancePct": 95.0944595336914
+  },
+  "methodology": {
+    "timingRepeats": 5,
+    "latency": "Mean per-sample StandardScaler + projection + classifier prediction time.",
+    "projectionStorage": "PCA projection matrix bytes only; classifier and shared scaler storage excluded.",
+    "comparison": "Check marks mean Proposed INT8 is equal or better for that metric; crosses mean the baseline is better."
+  },
+  "models": [
+    {
+      "name": "Proposed INT8 + Random Forest",
+      "note": "Your optimized quantized PCA projection with the project's 100-tree classifier.",
+      "accuracyPct": 82.83333333333334,
+      "weightedF1": 0.8285086992518627,
+      "latencyMsPerSample": 0.05364640000000994,
+      "projectionBytes": 52266
+    },
+    {
+      "name": "Float PCA + Random Forest",
+      "note": "Full-precision PCA reference with the same 100-tree classifier.",
+      "accuracyPct": 82.08333333333333,
+      "weightedF1": 0.8203967817878995,
+      "latencyMsPerSample": 0.08580019999999422,
+      "projectionBytes": 209064
+    },
+    {
+      "name": "Naive INT8 PCA + Random Forest",
+      "note": "Directly rounded INT8 PCA projection with the same 100-tree classifier.",
+      "accuracyPct": 82.5,
+      "weightedF1": 0.8253957650169007,
+      "latencyMsPerSample": 0.06318163333336695,
+      "projectionBytes": 52266
+    },
+    {
+      "name": "Float PCA + RBF SVM",
+      "note": "RBF support vector classifier on the shared 95%-variance PCA features.",
+      "accuracyPct": 85.16666666666667,
+      "weightedF1": 0.8540123553943484,
+      "latencyMsPerSample": 0.10856798333331123,
+      "projectionBytes": 209064
+    },
+    {
+      "name": "Float PCA + 5-NN",
+      "note": "Five-nearest-neighbor classifier on the shared 95%-variance PCA features.",
+      "accuracyPct": 80.58333333333333,
+      "weightedF1": 0.8024859246735951,
+      "latencyMsPerSample": 0.04762205000001055,
+      "projectionBytes": 209064
+    },
+    {
+      "name": "Float PCA + Logistic Regression",
+      "note": "Multinomial logistic regression on the shared 95%-variance PCA features.",
+      "accuracyPct": 83.16666666666667,
+      "weightedF1": 0.8347783977378924,
+      "latencyMsPerSample": 0.004962549999921369,
+      "projectionBytes": 209064
+    }
+  ],
+  "comparisons": [
+    {
+      "name": "Float PCA + Random Forest",
+      "accuracy": {
+        "proposed": 82.83333333333334,
+        "baseline": 82.08333333333333,
+        "proposedWins": true
+      },
+      "latency": {
+        "proposed": 0.05364640000000994,
+        "baseline": 0.08580019999999422,
+        "proposedWins": true
+      },
+      "projection": {
+        "proposed": 52266,
+        "baseline": 209064,
+        "proposedWins": true
+      }
+    },
+    {
+      "name": "Naive INT8 PCA + Random Forest",
+      "accuracy": {
+        "proposed": 82.83333333333334,
+        "baseline": 82.5,
+        "proposedWins": true
+      },
+      "latency": {
+        "proposed": 0.05364640000000994,
+        "baseline": 0.06318163333336695,
+        "proposedWins": true
+      },
+      "projection": {
+        "proposed": 52266,
+        "baseline": 52266,
+        "proposedWins": true
+      }
+    },
+    {
+      "name": "Float PCA + RBF SVM",
+      "accuracy": {
+        "proposed": 82.83333333333334,
+        "baseline": 85.16666666666667,
+        "proposedWins": false
+      },
+      "latency": {
+        "proposed": 0.05364640000000994,
+        "baseline": 0.10856798333331123,
+        "proposedWins": true
+      },
+      "projection": {
+        "proposed": 52266,
+        "baseline": 209064,
+        "proposedWins": true
+      }
+    },
+    {
+      "name": "Float PCA + 5-NN",
+      "accuracy": {
+        "proposed": 82.83333333333334,
+        "baseline": 80.58333333333333,
+        "proposedWins": true
+      },
+      "latency": {
+        "proposed": 0.05364640000000994,
+        "baseline": 0.04762205000001055,
+        "proposedWins": false
+      },
+      "projection": {
+        "proposed": 52266,
+        "baseline": 209064,
+        "proposedWins": true
+      }
+    },
+    {
+      "name": "Float PCA + Logistic Regression",
+      "accuracy": {
+        "proposed": 82.83333333333334,
+        "baseline": 83.16666666666667,
+        "proposedWins": false
+      },
+      "latency": {
+        "proposed": 0.05364640000000994,
+        "baseline": 0.004962549999921369,
+        "proposedWins": false
+      },
+      "projection": {
+        "proposed": 52266,
+        "baseline": 209064,
+        "proposedWins": true
+      }
+    }
+  ]
+}
